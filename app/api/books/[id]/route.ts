@@ -163,3 +163,60 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         }, { status: 500 });
     }
 }
+
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    try {
+        const userId = req.headers.get('x-user-id');
+
+        if (!userId) {
+            return NextResponse.json({
+                status: 'warning',
+                message: 'User Authenticated, but userId is missing in headers, please login again',
+            },
+                { status: 400 });
+        }
+
+        const { id } = await params;
+
+        // Check if book exists or not
+        const existingBook = await db.book.findFirst({
+            where: {
+                id: id
+            }
+        });
+
+        if (!existingBook) {
+            return NextResponse.json({
+                status: 'warning',
+                message: 'Book not found with this ID',
+            }, { status: 404 });
+        }
+
+        if (existingBook.userId !== userId) {
+            return NextResponse.json({
+                status: 'error',
+                message: 'You are not authorized to delete this book',
+            }, { status: 403 });
+        }
+
+        await db.book.delete({
+            where: {
+                id: id
+            }
+        });
+
+        return NextResponse.json({
+            status: 'success',
+            message: 'Book deleted successfully'
+        }, { status: 201 });
+
+    } catch (error) {
+        console.error('deleting book error:', error);
+
+        return NextResponse.json({
+            status: 'error',
+            message: 'Internal server error',
+            error: error instanceof Error ? error.message : String(error),
+        }, { status: 500 });
+    }
+}
