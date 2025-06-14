@@ -6,6 +6,11 @@ export const userSchema = z.object({
   name: z.string({ message: "Name cannot be empty" }).min(1, { message: "Name cannot be empty" })
 });
 
+export const loginuserSchema = z.object({
+  email: z.string({ message: "Email cannot be empty" }).email({ message: "Invalid email format" }),
+  password: z.string({ message: "Password cannot be empty" }).min(6, { message: "Password must be at least 6 characters long" }),
+});
+
 // Utility function to format Zod validation errors into user-friendly messages
 export function formatZodErrors(error: z.ZodError): string {
   const fieldErrors: { [key: string]: string[] } = {};
