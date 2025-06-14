@@ -11,6 +11,13 @@ export const loginuserSchema = z.object({
   password: z.string({ message: "Password cannot be empty" }).min(6, { message: "Password must be at least 6 characters long" }),
 });
 
+export const bookSchema = z.object({
+  title: z.string({ message: "Title cannot be empty" }).min(1, { message: "Title cannot be empty" }),
+  author: z.string({ message: "Author cannot be empty" }).min(1, { message: "Author cannot be empty" }),
+  publishedDate: z.string({ message: "Published date cannot be empty" }),
+  isbn: z.string({ message: "ISBN cannot be empty" }).min(1, { message: "ISBN cannot be empty" }),
+});
+
 // Utility function to format Zod validation errors into user-friendly messages
 export function formatZodErrors(error: z.ZodError): string {
   const fieldErrors: { [key: string]: string[] } = {};
