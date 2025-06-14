@@ -18,5 +18,18 @@ model User {
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 
+  books Book[]
+
   @@index([email])
+}
+
+model Book {
+  id            String   @id @default(uuid())
+  title         String
+  author        String
+  isbn          String   @unique
+  publishedDate DateTime
+  userId        String   @map("authorId")
+
+  user          User     @relation(fields: [userId], references: [id])
 }
