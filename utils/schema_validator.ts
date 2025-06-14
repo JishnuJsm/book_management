@@ -18,6 +18,13 @@ export const bookSchema = z.object({
   isbn: z.string({ message: "ISBN cannot be empty" }).min(1, { message: "ISBN cannot be empty" }),
 });
 
+export const updatebookSchema = z.object({
+  title: z.string({ message: "Title cannot be empty" }).min(1, { message: "Title cannot be empty" }).optional(),
+  author: z.string({ message: "Author cannot be empty" }).min(1, { message: "Author cannot be empty" }).optional(),
+  publishedDate: z.string({ message: "Published date cannot be empty" }).optional(),
+  isbn: z.string({ message: "ISBN cannot be empty" }).min(1, { message: "ISBN cannot be empty" }).optional()
+});
+
 // Utility function to format Zod validation errors into user-friendly messages
 export function formatZodErrors(error: z.ZodError): string {
   const fieldErrors: { [key: string]: string[] } = {};
