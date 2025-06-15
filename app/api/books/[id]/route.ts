@@ -11,10 +11,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
                 id: id
             },
             include: {
-                userId: false,
                 user: {
                     select: {
-                        id: true,
                         name: true,
                         email: true,
                         createdAt: true
@@ -128,10 +126,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
                 isbn
             },
             include: {
-                userId: false,
                 user: {
                     select: {
-                        id: true,
                         name: true,
                         email: true,
                         createdAt: true

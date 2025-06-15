@@ -7,10 +7,8 @@ export async function GET() {
     try {
         const books = await db.book.findMany({
             include: {
-                userId: false,
                 user: {
                     select: {
-                        id: true,
                         name: true,
                         email: true,
                         createdAt: true
@@ -101,10 +99,8 @@ export async function POST(req: NextRequest) {
                 userId
             },
             include: {
-                userId: false,
                 user: {
                     select: {
-                        id: true,
                         name: true,
                         email: true,
                         createdAt: true
